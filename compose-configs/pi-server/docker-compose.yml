@@ -22,10 +22,12 @@ services:
     image: nodered/node-red-docker:latest
     networks:
       - reverse-proxy-net
+      - mosquitto-net
     volumes:
       - ./node-red-data:/data
     labels:
       - "traefik.http.routers.nodered.rule=PathPrefix(`/node-red`)"
+      - "traefik.docker.network=pi-server_reverse-proxy-net"
     restart: unless-stopped
 
   grafana:
@@ -41,5 +43,14 @@ services:
       - "traefik.http.routers.grafana.middlewares=grafana-stripprefix"
     restart: unless-stopped
 
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    ports:
+      - "1883:1883"
+    restart: unless-stopped
+    networks:
+      - mosquitto-net
+
 networks:
   reverse-proxy-net:
+  mosquitto-net:
