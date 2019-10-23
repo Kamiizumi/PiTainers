@@ -17,6 +17,7 @@ services:
     networks:
       - reverse-proxy-net
     restart: unless-stopped
+
   node-red:
     image: nodered/node-red-docker:latest
     networks:
@@ -25,5 +26,18 @@ services:
       - ./node-red-data:/data
     labels:
       - "traefik.http.routers.nodered.rule=PathPrefix(`/node-red`)"
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      - "GF_SECURITY_COOKIE_SECURE=false"
+      - "GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s/grafana/"
+    networks:
+      - reverse-proxy-net
+    labels:
+      - "traefik.http.routers.grafana.rule=PathPrefix(`/grafana`)"
+      - "traefik.http.middlewares.grafana-stripprefix.stripprefix.prefixes=/grafana"
+      - "traefik.http.routers.grafana.middlewares=grafana-stripprefix"
+
 networks:
   reverse-proxy-net:
