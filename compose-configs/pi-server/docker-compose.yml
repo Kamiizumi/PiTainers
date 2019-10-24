@@ -18,11 +18,18 @@ services:
       - reverse-proxy-net
     restart: unless-stopped
 
+  influx:
+    image: influxdb:latest
+    networks:
+      - influx-net
+    restart: unless-stopped
+
   node-red:
     image: nodered/node-red-docker:latest
     networks:
       - reverse-proxy-net
       - mosquitto-net
+      - influx-net
     volumes:
       - ./node-red-data:/data
     labels:
@@ -37,10 +44,12 @@ services:
       - "GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s/grafana/"
     networks:
       - reverse-proxy-net
+      - influx-net
     labels:
       - "traefik.http.routers.grafana.rule=PathPrefix(`/grafana`)"
       - "traefik.http.middlewares.grafana-stripprefix.stripprefix.prefixes=/grafana"
       - "traefik.http.routers.grafana.middlewares=grafana-stripprefix"
+      - "traefik.docker.network=pi-server_reverse-proxy-net"
     restart: unless-stopped
 
   mosquitto:
@@ -54,3 +63,4 @@ services:
 networks:
   reverse-proxy-net:
   mosquitto-net:
+  influx-net:
