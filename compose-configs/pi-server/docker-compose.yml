@@ -25,7 +25,7 @@ services:
     restart: unless-stopped
 
   node-red:
-    image: nodered/node-red-docker:latest
+    image: nodered/node-red:latest
     networks:
       - reverse-proxy-net
       - mosquitto-net
