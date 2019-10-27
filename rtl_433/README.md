@@ -6,6 +6,8 @@ This folder creates Docker containers that build and contain the [rtl_433](https
 
 The Dockerfile this container uses is based on an arm32v6 base image, meaning an arm32v6 capable host is required (e.g. the *Raspberry Pi 1*).
 
+The rtl_433 source code is referenced via a Git submodule at rtl_433/rtl_433. Ensure this submodule is cloned before building the Docker container.
+
 The Docker container can be built by running the following command from this folder:
 
 ```sh
