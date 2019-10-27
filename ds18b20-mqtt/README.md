@@ -23,10 +23,11 @@ ls /sys/bus/w1/devices/
 The container can be started with the following command:
 
 ```sh
-docker run -d --privileged --restart=unless-stopped --name SOME_CONTAINER_NAME ds18b20 SERIAL_NUMBER
+docker run -d --privileged --restart=unless-stopped --name SOME_CONTAINER_NAME ds18b20-mqtt SERIAL_NUMBER MQTT_HOST
 ```
 
 - `CONTAINER_NAME` should be set to a unique name for the container instance (e.g. *ds18b20-outdoors*)
 - `SERIAL_NUMBER` must be set to the serial number of the DS18B20 temperature sensor to read from (e.g. *28-051760c6b1ff*)
+- `MQTT_HOST` must be set to the MQTT host to send temperature readings to
 - `--privileged` is required so the container can access the 1-Wire bus on the Pi
 - `--restart=unless-stopped` is recommended ensures the container restarts if the Pi (or Docker) is rebooted
