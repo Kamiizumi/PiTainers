@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  # Internal sensor
+  ds18b20-28-051760c72dff:
+    image: ds18b20-mqtt:latest
+    command: 28-051760c72dff pi3-bplus.lan
+    restart: unless-stopped
+
+  # External sensor
+  ds18b20-28-051760c6b1ff:
+    image: ds18b20-mqtt:latest
+    command: 28-051760c6b1ff pi3-bplus.lan
+    restart: unless-stopped
