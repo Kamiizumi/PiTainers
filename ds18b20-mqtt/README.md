@@ -9,7 +9,7 @@ The Dockerfile this container uses is based on an arm32v6 base image, meaning an
 The Docker container can be built by running the following command from this folder:
 
 ```sh
-docker build -t ds18b20-mqtt .
+docker build -t ds18b20-mqtt:latest .
 ```
 
 ## Usage
