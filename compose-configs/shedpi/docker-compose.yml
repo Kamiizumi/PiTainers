@@ -12,3 +12,9 @@ services:
     image: ds18b20-mqtt:latest
     command: 28-051760c6b1ff pi3-bplus.lan
     restart: unless-stopped
+
+  rtl_433:
+    image: rtl_433:latest
+    command: -d 0 -M newmodel -F mqtt://pi3-bplus.lan,devices=rtl_433/devices[/type][/model][/subtype][/channel][/id]
+    privileged: true
+    restart: unless-stopped
