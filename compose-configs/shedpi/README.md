@@ -4,7 +4,7 @@ This docker-compose file starts up the services I use on ShedPi (a Raspberry Pi 
 
 ## Usage
 
-Ensure that the `ds18b20-mqtt` image has been built or is available to the Docker daemon.
+Ensure that the `ds18b20-mqtt` and `rtl_433` images have been built or are available to the Docker daemon.
 
 To bring up ShedPi services run the following command:
 
