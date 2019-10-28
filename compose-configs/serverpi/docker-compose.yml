@@ -34,7 +34,7 @@ services:
       - ./node-red-data:/data
     labels:
       - "traefik.http.routers.nodered.rule=PathPrefix(`/node-red`)"
-      - "traefik.docker.network=pi-server_reverse-proxy-net"
+      - "traefik.docker.network=serverpi_reverse-proxy-net"
     restart: unless-stopped
 
   grafana:
@@ -49,7 +49,7 @@ services:
       - "traefik.http.routers.grafana.rule=PathPrefix(`/grafana`)"
       - "traefik.http.middlewares.grafana-stripprefix.stripprefix.prefixes=/grafana"
       - "traefik.http.routers.grafana.middlewares=grafana-stripprefix"
-      - "traefik.docker.network=pi-server_reverse-proxy-net"
+      - "traefik.docker.network=serverpi_reverse-proxy-net"
     restart: unless-stopped
 
   mosquitto:
