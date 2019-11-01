@@ -2,8 +2,7 @@ version: '3'
 
 services:
   reverse-proxy:
-    # The official v2.0 Traefik docker image
-    image: traefik:v2.0
+    image: traefik:2.0.4
     ports:
       # The HTTP port
       - "80:80"
@@ -18,13 +17,13 @@ services:
     restart: unless-stopped
 
   influx:
-    image: influxdb:latest
+    image: influxdb:1.7.8-alpine
     networks:
       - influx-net
     restart: unless-stopped
 
   node-red:
-    image: nodered/node-red:latest
+    image: nodered/node-red:1.0.2-12-minimal
     networks:
       - reverse-proxy-net
       - mosquitto-net
@@ -52,7 +51,7 @@ services:
     restart: unless-stopped
 
   mosquitto:
-    image: eclipse-mosquitto:latest
+    image: eclipse-mosquitto:1.6.7
     ports:
       - "1883:1883"
     restart: unless-stopped
