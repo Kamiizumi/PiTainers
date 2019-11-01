@@ -20,6 +20,8 @@ services:
     image: influxdb:1.7.8-alpine
     networks:
       - influx-net
+    volumes:
+      - ./volumes/influx/influxdb:/var/lib/influxdb
     restart: unless-stopped
 
   node-red:
@@ -29,7 +31,7 @@ services:
       - mosquitto-net
       - influx-net
     volumes:
-      - ./volumes/node-red-data:/data
+      - ./volumes/node-red/data:/data
     labels:
       - "traefik.http.routers.nodered.rule=PathPrefix(`/node-red`)"
       - "traefik.docker.network=serverpi_reverse-proxy-net"
@@ -43,6 +45,8 @@ services:
     networks:
       - reverse-proxy-net
       - influx-net
+    volumes:
+      - ./volumes/grafana/grafana:/var/lib/grafana
     labels:
       - "traefik.http.routers.grafana.rule=PathPrefix(`/grafana`)"
       - "traefik.http.middlewares.grafana-stripprefix.stripprefix.prefixes=/grafana"
@@ -54,9 +58,12 @@ services:
     image: eclipse-mosquitto:1.6.7
     ports:
       - "1883:1883"
-    restart: unless-stopped
     networks:
       - mosquitto-net
+    volumes:
+      - ./volumes/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./volumes/mosquitto/data:/mosquitto/data
+    restart: unless-stopped
 
 networks:
   reverse-proxy-net:
