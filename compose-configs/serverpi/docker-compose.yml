@@ -45,6 +45,7 @@ services:
     networks:
       - reverse-proxy-net
       - influx-net
+    user: "1000:1000"
     volumes:
       - ./volumes/grafana/grafana:/var/lib/grafana
     labels:
