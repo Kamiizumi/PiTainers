@@ -8,7 +8,6 @@ services:
       - "80:80"
       # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
-    user: "1000:1000"
     volumes:
       - ./volumes/reverse-proxy/traefik.toml:/etc/traefik/traefik.toml
       # So that Traefik can listen to the Docker events
@@ -21,9 +20,8 @@ services:
     image: influxdb:1.7.8
     networks:
       - influx-net
-    user: "1000:1000"
     volumes:
-      - ./volumes/influx/influxdb:/var/lib/influxdb
+      - influx-influxdb:/var/lib/influxdb
     restart: unless-stopped
 
   node-red:
@@ -32,7 +30,6 @@ services:
       - reverse-proxy-net
       - mosquitto-net
       - influx-net
-    user: "1000:1000"
     volumes:
       - ./volumes/node-red/data:/data
     labels:
@@ -48,9 +45,8 @@ services:
     networks:
       - reverse-proxy-net
       - influx-net
-    user: "1000:1000"
     volumes:
-      - ./volumes/grafana/grafana:/var/lib/grafana
+      - grafana-grafana:/var/lib/grafana
     labels:
       - "traefik.http.routers.grafana.rule=PathPrefix(`/grafana`)"
       - "traefik.http.middlewares.grafana-stripprefix.stripprefix.prefixes=/grafana"
@@ -64,11 +60,15 @@ services:
       - "1883:1883"
     networks:
       - mosquitto-net
-    user: "1000:1000"
     volumes:
       - ./volumes/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
-      - ./volumes/mosquitto/data:/mosquitto/data
+      - mosquitto-data:/mosquitto/data
     restart: unless-stopped
+
+volumes:
+  grafana-grafana:
+  influx-influxdb:
+  mosquitto-data:
 
 networks:
   reverse-proxy-net:
