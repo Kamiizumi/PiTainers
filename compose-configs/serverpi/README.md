@@ -1,2 +1,11 @@
-# node-red
-Need to mount /data and update settings.js httpRoot property to match router.
+# docker-compose for ServerPi
+
+This docker-compose file starts up the services I use on ServerPi.
+
+## Usage
+
+To bring up ServerPi services run the following command:
+
+```sh
+docker-compose up
+```
